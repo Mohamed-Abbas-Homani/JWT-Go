@@ -1,8 +1,7 @@
 package main
 
 import (
-	// "fmt"
-
+	"github.com/Mohamed-Abbas-Homani/jwt-go/controllers"
 	"github.com/Mohamed-Abbas-Homani/jwt-go/initializers"
 	"github.com/gin-gonic/gin"
 )
@@ -10,13 +9,11 @@ import (
 func init() {
 	initializers.LoadEnvVar()
 	initializers.ConnectToDB()
+	initializers.MigrateDB()
 }
 
 func main() {
-	// fmt.Println("Peace")
 	r := gin.Default()
-	r.GET("/", func (c *gin.Context) {
-		c.JSON(200, gin.H{"message":"Peace"})
-	})
+	r.POST("/signup", controllers.SignUp)
 	r.Run()
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+
 	"net/http"
 	"os"
 	"time"
@@ -80,6 +81,7 @@ func Login(c *gin.Context) {
 			gin.H{"error":"Invalid Email or Password."},
 		)
 		
+		
 		return
 	}
 	// Compare send in pass with saved user pass hash
@@ -92,21 +94,7 @@ func Login(c *gin.Context) {
 		
 		return
 	}
-	// Generate a jwt token
-	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-	// 	"sub": user.ID,
-	// 	"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
-	// })
 
-	// tokenString, err := token.SignedString([]byte(os.Getenv("SECRET"))) 
-	// if err != nil {
-	// 	c.IndentedJSON(
-	// 		http.StatusBadRequest,
-	// 		gin.H{"error":"Failed to create Token."},
-	// 	)
-		
-	// 	return
-	// }
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user.ID,
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
@@ -120,7 +108,7 @@ func Login(c *gin.Context) {
 
 	c.IndentedJSON(
 		http.StatusOK,
-		gin.H{},
+		gin.H{"token":tokenString},
 	)
 }
 
